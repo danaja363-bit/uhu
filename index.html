@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>DANZ PAYMENT | QRIS · Bayar Cepat</title>
+    <!-- QRCode.js library untuk generate QR code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -91,7 +93,7 @@
         }
         .title p { color: rgba(255,255,240,0.8); font-size: 14px; margin-top: 6px; }
 
-        /* QRIS - menampilkan QR code dari string yang diberikan */
+        /* QRIS */
         .qris-section {
             background: rgba(0,0,0,0.4);
             border-radius: 28px;
@@ -106,22 +108,15 @@
             margin-bottom: 10px;
             font-size: 14px;
         }
-        .qris-img {
-            background: white;
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-            border-radius: 20px;
+        #qris-container {
             display: flex;
-            align-items: center;
             justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .qris-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            align-items: center;
+            margin: 10px auto;
+            background: white;
+            padding: 10px;
+            border-radius: 20px;
+            width: fit-content;
         }
         .qris-note {
             font-size: 11px;
@@ -291,16 +286,16 @@
 <body>
 
 <div class="container">
-    <!-- MUSIC PLAYER AUTO REPLAY -->
+    <!-- MUSIC PLAYER -->
     <div class="music-player">
         <div class="song-info">
             <span class="music-icon">🎧</span>
             <div>
-                <div class="song-title">Background Music</div>
+                <div class="song-title">Golden Brown</div>
                 <div class="song-artist">DANZ · Premium</div>
             </div>
         </div>
-        <button class="play-btn" id="playPauseBtn">⏸</button>
+        <button class="play-btn" id="playPauseBtn">▶</button>
     </div>
 
     <div class="title">
@@ -308,13 +303,11 @@
         <p>unggah foto & isi data</p>
     </div>
 
-    <!-- QRIS dengan data dari string yang Anda berikan -->
+    <!-- QRIS -->
     <div class="qris-section">
         <div class="qris-title">📱 Scan QRIS untuk pembayaran</div>
-        <div class="qris-img" id="qrisImage">
-            <!-- QR code akan dibuat dari string yang diberikan -->
-        </div>
-        <div class="qris-note">Gunakan aplikasi DANA / QRIS untuk scan</div>
+        <div id="qris-container"></div>
+        <div class="qris-note">Gunakan aplikasi DANA / QRIS apa saja untuk scan</div>
     </div>
 
     <!-- UNGGAH FOTO -->
@@ -327,7 +320,7 @@
         <small style="color:#ccc">foto akan muncul di struk</small>
     </div>
 
-    <!-- Data pembayar -->
+    <!-- Data PEMBAYAR -->
     <div class="payment-form">
         <div class="input-group">
             <label>👤 Nama pembayar</label>
@@ -335,7 +328,7 @@
         </div>
         <div class="input-group">
             <label>📞 No. HP pembayar</label>
-            <input type="tel" id="customerPhone" placeholder="">
+            <input type="tel" id="customerPhone" placeholder="08123456789">
         </div>
         <div class="amount-box">
             <span class="amount-label">💰 Jumlah transfer</span>
@@ -346,7 +339,7 @@
         </div>
     </div>
 
-    <!-- Nomor penjual tetap -->
+    <!-- NOMOR PENJUAL TETAP -->
     <div style="margin: 10px 0 8px; border-top: 1px dashed #FFD966; padding-top: 12px;">
         <p style="color:#FFD966; font-size:12px;">🔐 Rekening Tujuan (Penjual)</p>
         <div class="input-group">
@@ -364,7 +357,7 @@
 
     <button class="wa-button" id="contactWaBtn">💬 Hubungi WhatsApp Penjual</button>
     <button class="dana-button" id="contactDanaBtn">💳 Transfer via DANA ke Penjual</button>
-    <footer>🔒 QRIS statis sesuai data yang diberikan</footer>
+    <footer>🔒 QRIS aktif & dapat di-scan</footer>
 </div>
 
 <!-- MODAL STRUK -->
@@ -377,34 +370,42 @@
 </div>
 
 <script>
-    // ========= QRIS: buat QR code dari string yang diberikan =========
+    // ========= QRIS: Generate QR Code menggunakan library QRCode.js =========
     const qrisString = "00020101021126570011ID.DANA.WWW011893600915324987049102092498704910303UMI51440014ID.CO.QRIS.WWW0215ID10254470729800303UMI5204549953033605802ID5906DANSTR6015Kota Jakarta Ba6105116406304230F";
-    // Menggunakan API Google Chart untuk membuat QR code (gratis & stabil)
-    const qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(qrisString)}&choe=UTF-8`;
-    const qrisImg = document.createElement('img');
-    qrisImg.src = qrUrl;
-    qrisImg.alt = "QRIS Code";
-    qrisImg.style.width = "100%";
-    qrisImg.style.height = "100%";
-    qrisImg.style.objectFit = "contain";
-    document.getElementById('qrisImage').appendChild(qrisImg);
     
-    // ========= MUSIK AUTO REPLAY (AUTO LOOP) & AUTO PLAY =========
+    // Hapus kontainer lama dan buat QR code baru
+    const qrisContainer = document.getElementById('qris-container');
+    qrisContainer.innerHTML = '';
+    new QRCode(qrisContainer, {
+        text: qrisString,
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+    
+    // ========= MUSIK AUTO REPLAY (looping) tapi butuh interaksi user dulu =========
     const audio = new Audio('https://mp3tourl.com/audio/1781506638357-aa764888-9e76-4de7-b4fd-bd5960181557.mp3');
-    audio.loop = true;
+    audio.loop = true;  // auto replay setelah selesai
     audio.volume = 0.5;
 
     const playBtn = document.getElementById('playPauseBtn');
-    let isPlaying = true;
+    let isPlaying = false;
 
-    audio.play().then(() => {
-        isPlaying = true;
-        playBtn.innerHTML = '⏸';
-    }).catch(() => {
-        isPlaying = false;
-        playBtn.innerHTML = '▶';
-    });
+    // Fungsi untuk memulai musik (dipanggil setelah ada interaksi)
+    function startMusic() {
+        if (!isPlaying) {
+            audio.play().then(() => {
+                isPlaying = true;
+                playBtn.innerHTML = '⏸';
+            }).catch((err) => {
+                console.log("Autoplay tidak diizinkan:", err);
+            });
+        }
+    }
 
+    // Tombol play/pause
     playBtn.addEventListener('click', () => {
         if (!isPlaying) {
             audio.play();
@@ -417,12 +418,23 @@
         }
     });
 
-    audio.addEventListener('ended', () => {
-        if (isPlaying) {
-            audio.play();
-        }
+    // Coba mulai musik saat halaman pertama kali di-load (jika browser mengizinkan)
+    // Banyak browser memblokir autoplay, jadi kita coba saja
+    document.addEventListener('DOMContentLoaded', () => {
+        // Coba play (akan gagal jika belum ada interaksi)
+        audio.play().then(() => {
+            isPlaying = true;
+            playBtn.innerHTML = '⏸';
+        }).catch(() => {
+            // Autoplay diblokir, beri tahu user untuk klik tombol play
+            console.log("Klik tombol play untuk memutar musik");
+            playBtn.innerHTML = '▶';
+            isPlaying = false;
+        });
     });
 
+    // Pastikan loop jalan jika lagu selesai (sudah .loop=true jadi otomatis)
+    
     // ========= UPLOAD FOTO =========
     let uploadedImageDataURL = null;
     const fileInput = document.getElementById('fileUpload');
@@ -491,7 +503,7 @@
     closeStruk.addEventListener('click', () => modal.classList.remove('show'));
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
 
-    // ========= TOMBOL KONTAK (WAJIB PAKAI NOMOR PENJUAL YANG SUDAH TETAP) =========
+    // ========= TOMBOL KONTAK =========
     const contactWa = document.getElementById('contactWaBtn');
     const contactDana = document.getElementById('contactDanaBtn');
 
@@ -509,4 +521,4 @@
     });
 </script>
 </body>
-    </html>
+        </html>
