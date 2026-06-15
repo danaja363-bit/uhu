@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>DANZ PAYMENT | Bayar Cepat</title>
+    <title>DANZ PAYMENT | QRIS · Bayar Cepat</title>
     <style>
         * {
             margin: 0;
@@ -14,7 +14,6 @@
 
         body {
             min-height: 100vh;
-            /* GAMBAR LATAR BELAKANG: menggunakan link dari Anda */
             background: url('https://cdn.phototourl.com/free/2026-06-15-70ceb19c-ddfc-4f5b-b0c3-43c5baa74bee.jpg') no-repeat center center/cover fixed;
             backdrop-filter: brightness(0.85) blur(2px);
             display: flex;
@@ -34,7 +33,6 @@
             z-index: 0;
         }
 
-        /* --- KODE CSS SELANJUTNYA SAMA PERSIS DENGAN JAWABAN SEBELUMNYA --- */
         .container {
             position: relative;
             z-index: 2;
@@ -56,7 +54,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             backdrop-filter: blur(4px);
             border: 0.5px solid rgba(255, 215, 0, 0.3);
         }
@@ -82,7 +80,7 @@
         }
         .play-btn:active { transform: scale(0.94); }
 
-        .title { text-align: center; margin-bottom: 28px; }
+        .title { text-align: center; margin-bottom: 20px; }
         .title h1 {
             font-size: 32px;
             font-weight: 800;
@@ -93,7 +91,44 @@
         }
         .title p { color: rgba(255,255,240,0.8); font-size: 14px; margin-top: 6px; }
 
-        /* Area upload foto */
+        /* QRIS - menampilkan QR code dari string yang diberikan */
+        .qris-section {
+            background: rgba(0,0,0,0.4);
+            border-radius: 28px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #FFD966;
+        }
+        .qris-title {
+            color: #FFD966;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .qris-img {
+            background: white;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .qris-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .qris-note {
+            font-size: 11px;
+            margin-top: 8px;
+            color: #FFD966;
+        }
+        
         .photo-section {
             background: rgba(0,0,0,0.4);
             border-radius: 28px;
@@ -196,7 +231,6 @@
         .wa-button { background: #25D366; }
         .dana-button { background: #1A9CFF; }
 
-        /* Modal Struk */
         .modal-struk {
             position: fixed;
             top: 0;
@@ -257,16 +291,16 @@
 <body>
 
 <div class="container">
-    <!-- MUSIC PLAYER dengan lagu dari link Anda -->
+    <!-- MUSIC PLAYER AUTO REPLAY -->
     <div class="music-player">
         <div class="song-info">
             <span class="music-icon">🎧</span>
             <div>
-                <div class="song-title">Golden Brown c</div>
+                <div class="song-title">Background Music</div>
                 <div class="song-artist">DANZ · Premium</div>
             </div>
         </div>
-        <button class="play-btn" id="playPauseBtn">▶</button>
+        <button class="play-btn" id="playPauseBtn">⏸</button>
     </div>
 
     <div class="title">
@@ -274,17 +308,26 @@
         <p>unggah foto & isi data</p>
     </div>
 
+    <!-- QRIS dengan data dari string yang Anda berikan -->
+    <div class="qris-section">
+        <div class="qris-title">📱 Scan QRIS untuk pembayaran</div>
+        <div class="qris-img" id="qrisImage">
+            <!-- QR code akan dibuat dari string yang diberikan -->
+        </div>
+        <div class="qris-note">Gunakan aplikasi DANA / QRIS untuk scan</div>
+    </div>
+
     <!-- UNGGAH FOTO -->
     <div class="photo-section">
         <div class="avatar-preview" id="avatarPreview">
-            <div class="avatar-placeholder" id="avatarPlaceholder">📷 Foto</div>
+            <div class="avatar-placeholder">📷 Foto</div>
         </div>
         <label class="upload-label" for="fileUpload">📸 Pilih Foto (dari galeri)</label>
         <input type="file" id="fileUpload" accept="image/jpeg, image/png, image/jpg">
         <small style="color:#ccc">foto akan muncul di struk</small>
     </div>
 
-    <!-- Data PEMBAYAR (diisi customer) -->
+    <!-- Data pembayar -->
     <div class="payment-form">
         <div class="input-group">
             <label>👤 Nama pembayar</label>
@@ -292,7 +335,7 @@
         </div>
         <div class="input-group">
             <label>📞 No. HP pembayar</label>
-            <input type="tel" id="customerPhone" placeholder="08123456789">
+            <input type="tel" id="customerPhone" placeholder="">
         </div>
         <div class="amount-box">
             <span class="amount-label">💰 Jumlah transfer</span>
@@ -303,7 +346,7 @@
         </div>
     </div>
 
-    <!-- NOMOR PENJUAL SUDAH LANGSUNG ADA (tidak perlu diisi pembeli) -->
+    <!-- Nomor penjual tetap -->
     <div style="margin: 10px 0 8px; border-top: 1px dashed #FFD966; padding-top: 12px;">
         <p style="color:#FFD966; font-size:12px;">🔐 Rekening Tujuan (Penjual)</p>
         <div class="input-group">
@@ -314,14 +357,14 @@
             <label>💳 Nomor DANA Penjual (sudah tetap)</label>
             <input type="tel" id="ownerDana" value="083194058051" readonly style="background:#2a2a3a; color:#ccc;">
         </div>
-        <small style="color:#FFD966;">* Nomor penjual sudah ditentukan, tidak perlu diubah</small>
+        <small style="color:#FFD966;">* Nomor penjual sudah ditentukan</small>
     </div>
 
     <button class="btn-pay" id="payBtn">✅ Bayar & Lihat Struk</button>
 
     <button class="wa-button" id="contactWaBtn">💬 Hubungi WhatsApp Penjual</button>
     <button class="dana-button" id="contactDanaBtn">💳 Transfer via DANA ke Penjual</button>
-    <footer>🔒 Foto & struk bersifat simulasi</footer>
+    <footer>🔒 QRIS statis sesuai data yang diberikan</footer>
 </div>
 
 <!-- MODAL STRUK -->
@@ -334,17 +377,37 @@
 </div>
 
 <script>
-    // ========= LAGU DENGAN LINK MP3 DARI ANDA =========
+    // ========= QRIS: buat QR code dari string yang diberikan =========
+    const qrisString = "00020101021126570011ID.DANA.WWW011893600915324987049102092498704910303UMI51440014ID.CO.QRIS.WWW0215ID10254470729800303UMI5204549953033605802ID5906DANSTR6015Kota Jakarta Ba6105116406304230F";
+    // Menggunakan API Google Chart untuk membuat QR code (gratis & stabil)
+    const qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(qrisString)}&choe=UTF-8`;
+    const qrisImg = document.createElement('img');
+    qrisImg.src = qrUrl;
+    qrisImg.alt = "QRIS Code";
+    qrisImg.style.width = "100%";
+    qrisImg.style.height = "100%";
+    qrisImg.style.objectFit = "contain";
+    document.getElementById('qrisImage').appendChild(qrisImg);
+    
+    // ========= MUSIK AUTO REPLAY (AUTO LOOP) & AUTO PLAY =========
     const audio = new Audio('https://mp3tourl.com/audio/1781506638357-aa764888-9e76-4de7-b4fd-bd5960181557.mp3');
     audio.loop = true;
     audio.volume = 0.5;
 
     const playBtn = document.getElementById('playPauseBtn');
-    let isPlaying = false;
+    let isPlaying = true;
+
+    audio.play().then(() => {
+        isPlaying = true;
+        playBtn.innerHTML = '⏸';
+    }).catch(() => {
+        isPlaying = false;
+        playBtn.innerHTML = '▶';
+    });
 
     playBtn.addEventListener('click', () => {
         if (!isPlaying) {
-            audio.play().catch(e => console.log("Autoplay diblokir browser, tap tombol lagi"));
+            audio.play();
             playBtn.innerHTML = '⏸';
             isPlaying = true;
         } else {
@@ -354,14 +417,11 @@
         }
     });
 
-    // Autoplay setelah interaksi pertama
-    document.body.addEventListener('touchstart', function once() {
-        audio.play().then(() => {
-            isPlaying = true;
-            playBtn.innerHTML = '⏸';
-        }).catch(() => {});
-        document.body.removeEventListener('touchstart', once);
-    }, { once: true });
+    audio.addEventListener('ended', () => {
+        if (isPlaying) {
+            audio.play();
+        }
+    });
 
     // ========= UPLOAD FOTO =========
     let uploadedImageDataURL = null;
@@ -404,6 +464,7 @@
                 <hr style="border-top:1px dashed #e6b800; margin:12px 0;">
                 <strong>📱 WA Penjual</strong> : ${waOwner}<br>
                 <strong>💳 DANA Penjual</strong> : ${danaOwner}<br>
+                <strong>💳 QRIS</strong> : Tersedia (scan kode)<br>
                 <hr>
                 <span style="color:#b45f06;">✅ Pembayaran tercatat (simulasi)</span><br>
                 <small>Konfirmasi ke penjual via WA/DANA</small>
