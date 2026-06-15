@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>DANZ PAYMENT | Setor Dana</title>
+    <title>DANZ PAYMENT | Bayar Cepat</title>
     <style>
         * {
             margin: 0;
@@ -14,7 +14,8 @@
 
         body {
             min-height: 100vh;
-            background: url('https://cdn.phototourl.com/free/2026-06-15-37c1d862-eff7-4b79-908c-05d8a25b8e2d.jpg') no-repeat center center/cover fixed;
+            /* GAMBAR LATAR BELAKANG: menggunakan link dari Anda */
+            background: url('https://cdn.phototourl.com/free/2026-06-15-70ceb19c-ddfc-4f5b-b0c3-43c5baa74bee.jpg') no-repeat center center/cover fixed;
             backdrop-filter: brightness(0.85) blur(2px);
             display: flex;
             justify-content: center;
@@ -33,6 +34,7 @@
             z-index: 0;
         }
 
+        /* --- KODE CSS SELANJUTNYA SAMA PERSIS DENGAN JAWABAN SEBELUMNYA --- */
         .container {
             position: relative;
             z-index: 2;
@@ -46,6 +48,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        /* Music Player */
         .music-player {
             background: rgba(0, 0, 0, 0.55);
             border-radius: 100px;
@@ -57,13 +60,7 @@
             backdrop-filter: blur(4px);
             border: 0.5px solid rgba(255, 215, 0, 0.3);
         }
-
-        .song-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .song-info { display: flex; align-items: center; gap: 12px; }
         .music-icon { font-size: 28px; }
         .song-title { color: white; font-weight: 600; font-size: 14px; }
         .song-artist { font-size: 11px; color: #ccc; }
@@ -96,13 +93,45 @@
         }
         .title p { color: rgba(255,255,240,0.8); font-size: 14px; margin-top: 6px; }
 
+        /* Area upload foto */
+        .photo-section {
+            background: rgba(0,0,0,0.4);
+            border-radius: 28px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            border: 1px dashed #FFD966;
+        }
+        .avatar-preview {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #1f1f2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px solid #FFD966;
+        }
+        .avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-placeholder { color: #aaa; font-size: 12px; text-align: center; }
+        .upload-label {
+            background: #FFD966;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+        }
+        #fileUpload { display: none; }
+
         .payment-form { display: flex; flex-direction: column; gap: 18px; margin: 20px 0 24px; }
         .input-group { display: flex; flex-direction: column; gap: 6px; }
-        .input-group label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #FFD966;
-        }
+        .input-group label { font-size: 13px; font-weight: 600; color: #FFD966; }
         .input-group input {
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid #FFD966;
@@ -133,10 +162,8 @@
             border-radius: 40px;
             color: white;
             font-size: 16px;
-            outline: none;
             text-align: right;
         }
-        .currency { color: #FFD966; font-weight: bold; }
 
         .btn-pay {
             background: linear-gradient(95deg, #e6b800, #ff9500);
@@ -168,9 +195,8 @@
         }
         .wa-button { background: #25D366; }
         .dana-button { background: #1A9CFF; }
-        .wa-button:active { transform: scale(0.97); background: #128C7E; }
-        .dana-button:active { transform: scale(0.97); background: #0a6fc7; }
 
+        /* Modal Struk */
         .modal-struk {
             position: fixed;
             top: 0;
@@ -190,60 +216,54 @@
         .modal-struk.show { visibility: visible; opacity: 1; }
         .struk-card {
             background: #fef9e6;
-            max-width: 340px;
+            max-width: 350px;
             width: 85%;
             border-radius: 32px;
             padding: 24px 20px;
             color: #2c2c2c;
             text-align: center;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.5);
             border: 2px solid #ffcd7e;
+            max-height: 85vh;
+            overflow-y: auto;
         }
         .struk-card h3 {
             font-size: 26px;
             font-weight: 800;
             border-bottom: 2px dashed #e6b800;
             display: inline-block;
-            padding-bottom: 6px;
             margin-bottom: 18px;
         }
         .struk-detail {
             text-align: left;
             margin: 16px 0;
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 14px;
             background: #fff6e0;
             padding: 14px;
             border-radius: 24px;
         }
+        .struk-foto { display: flex; justify-content: center; margin-bottom: 12px; }
+        .struk-foto img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #e6b800; }
         .close-struk {
             background: #e6b800;
             border: none;
             padding: 10px 20px;
             border-radius: 40px;
             font-weight: bold;
-            margin-top: 12px;
             cursor: pointer;
         }
-        footer {
-            text-align: center;
-            font-size: 11px;
-            color: #aaa;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 460px) { .container { padding: 20px 18px; } }
+        footer { text-align: center; font-size: 11px; color: #aaa; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Music player -->
+    <!-- MUSIC PLAYER dengan lagu dari link Anda -->
     <div class="music-player">
         <div class="song-info">
             <span class="music-icon">🎧</span>
             <div>
-                <div class="song-title">Golden Brown</div>
+                <div class="song-title">Golden Brown c</div>
+                <div class="song-artist">DANZ · Premium</div>
             </div>
         </div>
         <button class="play-btn" id="playPauseBtn">▶</button>
@@ -251,10 +271,20 @@
 
     <div class="title">
         <h1>💸 DANZ PAYMENT</h1>
-        <p>isi saldo / bayar tagihan</p>
+        <p>unggah foto & isi data</p>
     </div>
 
-    <!-- Bagian 1: Data pembayar (customer) -->
+    <!-- UNGGAH FOTO -->
+    <div class="photo-section">
+        <div class="avatar-preview" id="avatarPreview">
+            <div class="avatar-placeholder" id="avatarPlaceholder">📷 Foto</div>
+        </div>
+        <label class="upload-label" for="fileUpload">📸 Pilih Foto (dari galeri)</label>
+        <input type="file" id="fileUpload" accept="image/jpeg, image/png, image/jpg">
+        <small style="color:#ccc">foto akan muncul di struk</small>
+    </div>
+
+    <!-- Data PEMBAYAR (diisi customer) -->
     <div class="payment-form">
         <div class="input-group">
             <label>👤 Nama pembayar</label>
@@ -268,34 +298,33 @@
             <span class="amount-label">💰 Jumlah transfer</span>
             <div style="flex:2; display:flex; align-items:center; gap:6px;">
                 <span class="currency">Rp</span>
-                <input type="number" id="amountNumber" class="amount-input" placeholder="50000" value="50000">
+                <input type="number" id="amountNumber" class="amount-input" value="50000">
             </div>
         </div>
     </div>
 
-    <!-- Bagian 2: Data penerima (milik ANDA) -->
-    <div style="margin: 16px 0 8px; border-top: 1px dashed #FFD966; padding-top: 16px;">
-        <p style="color:#FFD966; font-size:12px; margin-bottom:10px;">🔐 Tujuan transfer (akun penerima, data Anda sendiri)</p>
+    <!-- NOMOR PENJUAL SUDAH LANGSUNG ADA (tidak perlu diisi pembeli) -->
+    <div style="margin: 10px 0 8px; border-top: 1px dashed #FFD966; padding-top: 12px;">
+        <p style="color:#FFD966; font-size:12px;">🔐 Rekening Tujuan (Penjual)</p>
         <div class="input-group">
-            <label>📱 WhatsApp pemilik (Anda)</label>
-            <input type="tel" id="ownerWhatsapp" placeholder="6283184341795">
+            <label>📱 WhatsApp Penjual (sudah tetap)</label>
+            <input type="tel" id="ownerWhatsapp" value="6283184341795" readonly style="background:#2a2a3a; color:#ccc;">
         </div>
         <div class="input-group">
-            <label>💳 Nomor DANA pemilik (Anda)</label>
-            <input type="tel" id="ownerDana" placeholder="083194058051">
+            <label>💳 Nomor DANA Penjual (sudah tetap)</label>
+            <input type="tel" id="ownerDana" value="083194058051" readonly style="background:#2a2a3a; color:#ccc;">
         </div>
+        <small style="color:#FFD966;">* Nomor penjual sudah ditentukan, tidak perlu diubah</small>
     </div>
 
-    <button class="btn-pay" id="payBtn">✅ Bayar & Dapatkan Struk</button>
+    <button class="btn-pay" id="payBtn">✅ Bayar & Lihat Struk</button>
 
-    <!-- Tombol kontak langsung ke WA dan DANA (menggunakan nomor pemilik) -->
-    <button class="wa-button" id="contactWaBtn">💬 Hubungi WhatsApp</button>
-    <button class="dana-button" id="contactDanaBtn">💳 Transfer via DANA</button>
-
-    <footer>🔒 Simulasi pembayaran • Data tersimpan sementara</footer>
+    <button class="wa-button" id="contactWaBtn">💬 Hubungi WhatsApp Penjual</button>
+    <button class="dana-button" id="contactDanaBtn">💳 Transfer via DANA ke Penjual</button>
+    <footer>🔒 Foto & struk bersifat simulasi</footer>
 </div>
 
-<!-- Modal struk -->
+<!-- MODAL STRUK -->
 <div id="receiptModal" class="modal-struk">
     <div class="struk-card">
         <h3>🧾 STRUK PEMBAYARAN</h3>
@@ -305,16 +334,17 @@
 </div>
 
 <script>
-    // 1. LAGU
-    const audio = new Audio('https://alright-azure-cx8xteii.edgeone.app/AUD-20260429-WA0221.mp3');
+    // ========= LAGU DENGAN LINK MP3 DARI ANDA =========
+    const audio = new Audio('https://mp3tourl.com/audio/1781506638357-aa764888-9e76-4de7-b4fd-bd5960181557.mp3');
     audio.loop = true;
-    audio.volume = 0.4;
+    audio.volume = 0.5;
+
     const playBtn = document.getElementById('playPauseBtn');
     let isPlaying = false;
 
     playBtn.addEventListener('click', () => {
         if (!isPlaying) {
-            audio.play().catch(() => {});
+            audio.play().catch(e => console.log("Autoplay diblokir browser, tap tombol lagi"));
             playBtn.innerHTML = '⏸';
             isPlaying = true;
         } else {
@@ -323,7 +353,8 @@
             isPlaying = false;
         }
     });
-    // autoplay (interaksi pertama)
+
+    // Autoplay setelah interaksi pertama
     document.body.addEventListener('touchstart', function once() {
         audio.play().then(() => {
             isPlaying = true;
@@ -332,27 +363,50 @@
         document.body.removeEventListener('touchstart', once);
     }, { once: true });
 
-    // 2. Generate struk
+    // ========= UPLOAD FOTO =========
+    let uploadedImageDataURL = null;
+    const fileInput = document.getElementById('fileUpload');
+    const avatarPreview = document.getElementById('avatarPreview');
+
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                uploadedImageDataURL = ev.target.result;
+                avatarPreview.innerHTML = `<img src="${uploadedImageDataURL}" style="width:100%; height:100%; object-fit:cover;">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // ========= GENERATE STRUK =========
     const modal = document.getElementById('receiptModal');
     const strukDiv = document.getElementById('strukContent');
     const closeStruk = document.getElementById('closeStrukBtn');
 
-    function generateStrukHTML(pembayarNama, pembayarHP, jumlah, waOwner, danaOwner) {
+    function formatRupiah(angka) {
+        return new Intl.NumberFormat('id-ID').format(angka);
+    }
+
+    function generateStrukHTML(nama, hp, jumlah, waOwner, danaOwner, foto) {
         const trxId = 'DANZ' + Date.now().toString().slice(-8);
         const tgl = new Date().toLocaleString('id-ID');
+        const fotoHtml = foto ? `<div class="struk-foto"><img src="${foto}" alt="foto"></div>` : `<div class="struk-foto"><div style="width:60px;height:60px;background:#ddd;border-radius:50%;display:flex;align-items:center;justify-content:center;">📷</div></div>`;
         return `
-            <div style="font-family: monospace; font-size: 14px;">
+            ${fotoHtml}
+            <div style="font-family: monospace;">
                 <strong>🆔 ID Transaksi</strong> : ${trxId}<br>
                 <strong>📅 Tanggal</strong> : ${tgl}<br>
-                <strong>👤 Nama Pembayar</strong> : ${pembayarNama || "Pelanggan"}<br>
-                <strong>📞 No. HP Pembayar</strong> : ${pembayarHP || "-"}<br>
-                <strong>💰 Jumlah Transfer</strong> : Rp ${Number(jumlah).toLocaleString('id-ID')}<br>
+                <strong>👤 Nama</strong> : ${nama || "Pelanggan"}<br>
+                <strong>📞 No. HP</strong> : ${hp || "-"}<br>
+                <strong>💰 Jumlah</strong> : Rp ${formatRupiah(jumlah)}<br>
                 <hr style="border-top:1px dashed #e6b800; margin:12px 0;">
-                <strong>📱 Kirim ke WhatsApp</strong> : ${waOwner || "belum diisi"}<br>
-                <strong>💳 Kirim ke DANA</strong> : ${danaOwner || "belum diisi"}<br>
-                <hr style="border-top:1px dashed #e6b800; margin:12px 0;">
-                <span style="color:#b45f06;">✅ Pembayaran Berhasil (Simulasi)</span><br>
-                <small>Terima kasih, segera konfirmasi via WA/DANA</small>
+                <strong>📱 WA Penjual</strong> : ${waOwner}<br>
+                <strong>💳 DANA Penjual</strong> : ${danaOwner}<br>
+                <hr>
+                <span style="color:#b45f06;">✅ Pembayaran tercatat (simulasi)</span><br>
+                <small>Konfirmasi ke penjual via WA/DANA</small>
             </div>
         `;
     }
@@ -361,52 +415,37 @@
         const nama = document.getElementById('customerName').value.trim();
         const hp = document.getElementById('customerPhone').value.trim();
         const amount = parseInt(document.getElementById('amountNumber').value, 10);
-        const waOwner = document.getElementById('ownerWhatsapp').value.trim();
-        const danaOwner = document.getElementById('ownerDana').value.trim();
+        const waOwner = document.getElementById('ownerWhatsapp').value;
+        const danaOwner = document.getElementById('ownerDana').value;
 
-        if (!nama) { alert("Nama pembayar wajib diisi"); return; }
-        if (!hp) { alert("No. HP pembayar wajib diisi"); return; }
+        if (!nama) { alert("Nama wajib diisi"); return; }
+        if (!hp) { alert("No HP wajib diisi"); return; }
         if (isNaN(amount) || amount <= 0) { alert("Jumlah transfer harus lebih dari 0"); return; }
 
-        const struk = generateStrukHTML(nama, hp, amount, waOwner || "(belum diisi)", danaOwner || "(belum diisi)");
-        strukDiv.innerHTML = struk;
+        const strukHtml = generateStrukHTML(nama, hp, amount, waOwner, danaOwner, uploadedImageDataURL);
+        strukDiv.innerHTML = strukHtml;
         modal.classList.add('show');
     });
 
     closeStruk.addEventListener('click', () => modal.classList.remove('show'));
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
 
-    // 3. Tombol kontak WA & DANA (memanggil nomor pemilik yang sudah diisi)
+    // ========= TOMBOL KONTAK (WAJIB PAKAI NOMOR PENJUAL YANG SUDAH TETAP) =========
     const contactWa = document.getElementById('contactWaBtn');
     const contactDana = document.getElementById('contactDanaBtn');
 
     contactWa.addEventListener('click', () => {
-        let waOwnerNum = document.getElementById('ownerWhatsapp').value.trim();
-        if (!waOwnerNum) {
-            alert("Isi dulu nomor WhatsApp pemilik (Anda) pada kolom di atas");
-            return;
-        }
-        // pastikan format internasional (62xxx) bisa langsung digunakan
-        let cleanNum = waOwnerNum.replace(/\D/g, '');
-        if (!cleanNum.startsWith('62') && !cleanNum.startsWith('0')) {
-            alert("Gunakan format 628xxx atau 08xxx");
-            return;
-        }
-        if (cleanNum.startsWith('0')) cleanNum = '62' + cleanNum.slice(1);
-        const msg = "Halo, saya sudah melakukan pembayaran. Mohon diproses.";
-        window.open(`https://wa.me/${cleanNum}?text=${encodeURIComponent(msg)}`, '_blank');
+        let waNumber = document.getElementById('ownerWhatsapp').value;
+        let clean = waNumber.replace(/\D/g, '');
+        if (clean.startsWith('0')) clean = '62' + clean.slice(1);
+        if (!clean.startsWith('62')) clean = '62' + clean;
+        window.open(`https://wa.me/${clean}?text=${encodeURIComponent("Halo, saya sudah transfer. Mohon konfirmasi.")}`, '_blank');
     });
 
     contactDana.addEventListener('click', () => {
-        let danaNum = document.getElementById('ownerDana').value.trim();
-        if (!danaNum) {
-            alert("Isi dulu nomor DANA pemilik (Anda) pada kolom di atas");
-            return;
-        }
-        // DANA menggunakan nomor hp biasa (bisa pakai skema tel: atau buka aplikasi)
-        // Karena tidak ada deep link universal, kita hanya menampilkan nomor agar user bisa transfer manual
-        alert(`Silakan transfer ke nomor DANA: ${danaNum}\nSetelah transfer, konfirmasi via WhatsApp.`);
+        let danaNumber = document.getElementById('ownerDana').value;
+        alert(`Silakan transfer ke nomor DANA Penjual: ${danaNumber}\nSetelah transfer, konfirmasi via WhatsApp.`);
     });
 </script>
 </body>
-</html>
+    </html>
